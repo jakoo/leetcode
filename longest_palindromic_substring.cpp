@@ -27,21 +27,24 @@ public:
         format_str[i] = '\0';
 
         int bi = 0; //border_index
-        int li = 0; //longest_index
+        int li = 0; 
+        int maxi = 0; //longest_index
         for(int i = 1; format_str[i] != '\0'; ++i)
         {
             p[i] = bi > i ? min(p[2*li - i], bi - i) : 1;
             while(format_str[i + p[i]] == format_str[i - p[i]])
                 ++p[i];
-            if (p[i] >  p[li])
+            if (p[i] > p[maxi])
+                maxi = i;
+            if (p[i] + i - 1 > bi)
             {
                  bi = i + p[i] - 1;
                  li = i;
             }
         }
-        int head = li - p[li] + 2;
+        int head = maxi - p[maxi] + 2;
 
-        return string(s, head / 2 - 1, p[li] - 1);
+        return string(s, head / 2 - 1, p[maxi] - 1);
     }
 };
 
